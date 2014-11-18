@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Editar Categoria</h2>
+        <hr/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" role="form" action="" method="post">
+            <div class="form-group">
+                <label for="nome" class="col-sm-2 control-label">Nome</label>
+                <div class="col-sm-10">
+                    <input type="text" name="nome" class="form-control" id="nome" required="true" value="<?php echo $this->categoria->nome; ?>">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="id_pai" class="col-sm-2 control-label">Categoria Pai</label>
+                <div class="col-sm-10">
+                    <select name="id_pai" class="form-control" id="id_pai">
+                        <option value="">Sem Pai</option>
+                        <?php foreach ($this->categorias as $categoria) : ?>
+                            <?php $selected = ($this->categoria->id_pai == $categoria->id ? 'selected' : ''); ?>
+                            <option <?php echo $selected; ?> value="<?php echo $categoria->id; ?>"><?php echo $categoria->nome; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="tipo" class="col-sm-2 control-label">Tipo</label>
+                <div class="col-sm-10">
+                    <select name="tipo" class="form-control" id="tipo" required="true">
+                        <option value="">Selecione...</option>
+                        <option value="R" <?php echo ($this->categoria->tipo == 'R' ? 'selected' : ''); ?>>Receita</option>
+                        <option value="D" <?php echo ($this->categoria->tipo == 'D' ? 'selected' : ''); ?>>Despesa</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Salvar Dados</button>
+                    <a href="/categorias" class="btn btn-default">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

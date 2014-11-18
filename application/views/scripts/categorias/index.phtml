@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Categorias</h2>
+        <hr/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a href="/categorias/add" class="btn btn-primary">Nova Categoria</a>
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover tree">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th class="acoes">Tipo</th>
+                    <th class="acoes">Ações</th>
+                </tr>   
+            </thead>
+            <tbody>
+                <?php foreach ($this->categorias as $categoria) : ?>
+                    <tr class="treegrid-<?php echo $categoria->id; ?>">
+                        <td><?php echo $categoria->nome; ?></td>
+                        <td class="acoes"><?php echo ($categoria->tipo == "R" ? 'Receita' : 'Despesa'); ?></td>
+                        <td class="acoes">
+                            <a href="/categorias/edit/id/<?php echo $categoria->id; ?>" class="btn btn-xs btn-success" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a href="/categorias/remover/id/<?php echo $categoria->id; ?>" class="btn btn-xs btn-danger" title="Excluir"><i class="glyphicon glyphicon-trash"></i></a>
+                        </td>
+                    </tr>
+
+                    <?php foreach ($categoria->getChildrens() as $filho) : ?>
+                        <tr class=" treegrid-<?php echo $filho->id; ?> treegrid-parent-<?php echo $categoria->id; ?>">
+                            <td><?php echo $filho->nome; ?></td>
+                            <td class="acoes"><?php echo ($filho->tipo == "R" ? 'Receita' : 'Despesa'); ?></td>
+                            <td class="acoes">
+                                <a href="/categorias/edit/id/<?php echo $filho->id; ?>" class="btn btn-xs btn-success" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
+                                <a href="/categorias/remover/id/<?php echo $filho->id; ?>" class="btn btn-xs btn-danger" title="Excluir"><i class="glyphicon glyphicon-trash"></i></a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

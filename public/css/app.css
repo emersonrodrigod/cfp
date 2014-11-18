@@ -1,0 +1,21 @@
+/* data tables*/
+.dataTables_filter {float: left;width: 30%;background: #f4f4f4;margin-bottom: 10px;min-height: 59px;}
+.dataTables_filter label {padding: 10px;margin: 0;}
+.dataTables_filter input {width: auto;display: inline-block;margin: 0;}
+.dataTables_wrapper .toolbar {float: left;width: 30%;background: #f4f4f4;margin-bottom: 10px;min-height: 59px;}
+.dataTables_wrapper .toolbar label {padding: 10px;margin: 0;}
+.dataTables_wrapper .toolbar select {width: auto;margin: 0;}
+.dataTables_length {float: left;width: 40%;text-align: right;background: #f4f4f4;margin-bottom: 10px;min-height: 59px;}
+.dataTables_length label {padding: 10px;margin: 0;}
+.dataTables_length select {width: auto;margin: 0;}
+.dataTables_info {font-size: .875em;color: #999;text-align: right;}
+.dataTables_paginate {height: 1.5em;text-align: center;margin: 20px auto;}
+.dataTables_paginate a {display: block;padding: 6px;color: #999;float: left;font-size: .875em;margin-left: .3125em;cursor: pointer;}
+.dataTables_paginate a.paginate_active {background: #428bca;color: white;font-weight: bold;cursor: default;}
+
+/* Helper classes */
+.algLeft {text-align: left;}
+.algRight {text-align: right;}
+.algCenter {text-align: center;}
+.id {text-align: center; width: 10%;}
+.acoes {text-align: center; width: 15%;}

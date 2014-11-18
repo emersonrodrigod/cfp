@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Controle Financeiro Pessoal</title>
+
+        <!-- Bootstrap -->
+        <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/calendar/css/calendar.css">
+        <link rel="stylesheet" href="/jquery-tree/css/jquery.treegrid.css">
+        <link href="/css/fullcalendar.css" rel="stylesheet" media="screen">
+        <link href="/css/fullcalendar.print.css" rel="stylesheet" media="print">
+        <link rel="stylesheet" href="/css/app.css">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="/" class="navbar-brand">CFP</a>
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar-main">
+                    <ul class="nav navbar-nav">
+                        <!--<li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span class="caret"></span></a>
+                            <ul class="dropdown-menu" aria-labelledby="themes">
+                                <li><a href="../default/">Default</a></li>
+                                <li class="divider"></li>
+                                <li><a href="../cerulean/">Cerulean</a></li>
+                                <li><a href="../cosmo/">Cosmo</a></li>
+                                <li><a href="../cyborg/">Cyborg</a></li>
+                                <li><a href="../darkly/">Darkly</a></li>
+                                <li><a href="../flatly/">Flatly</a></li>
+                                <li><a href="../journal/">Journal</a></li>
+                                <li><a href="../lumen/">Lumen</a></li>
+                                <li><a href="../paper/">Paper</a></li>
+                                <li><a href="../readable/">Readable</a></li>
+                                <li><a href="../sandstone/">Sandstone</a></li>
+                                <li><a href="../simplex/">Simplex</a></li>
+                                <li><a href="../slate/">Slate</a></li>
+                                <li><a href="../spacelab/">Spacelab</a></li>
+                                <li><a href="../superhero/">Superhero</a></li>
+                                <li><a href="../united/">United</a></li>
+                                <li><a href="../yeti/">Yeti</a></li>
+                            </ul>
+                        </li> -->
+                        <li><a href="/">Painel de Controle</a></li>
+
+                        <li><a href="/despesas">Despesas</a></li>
+
+                        <li><a href="/receitas">Receitas</a></li>
+
+                        <li><a href="/receitas">Cartões de Crédito</a></li>
+
+                        <li><a href="/receitas">Orçamentos</a></li>
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="relatorios">Relatórios <span class="caret"></span></a>
+                            <ul class="dropdown-menu" aria-labelledby="relatorios">
+                                <li><a href="#">Extrato de caixa</a></li>
+                                <li><a href="#">Contas a pagar</a></li>
+                                <li><a href="#">Contas a receber</a></li>
+                                <li><a href="#">Orçado x Realizado</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="configuracoes">Configurações <span class="caret"></span></a>
+                            <ul class="dropdown-menu" aria-labelledby="configuracoes">
+                                <li><a href="/contas">Contas/caixas</a></li>
+                                <li><a href="/categorias">Categorias</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <div class="page-header"></div>
+
+            <?php echo $this->flashMessenger(); ?>
+            <?php echo $this->layout()->content; ?>
+
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/calendar/js/underscore-min.js"></script>
+        <script type="text/javascript" src="/js/moment.min.js"></script>
+        <script type="text/javascript" src="/js/fullcalendar.min.js"></script>
+        <script type="text/javascript" src="/js/lang-all.js"></script>
+        <script type="text/javascript" src="/jquery-tree/js/jquery.treegrid.js"></script>
+        <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+        <script>
+            $('.tree').treegrid(
+                    {
+                        initialState: 'collapsed'
+                    }
+            );
+
+            $(function() {
+                var oTable = $('.dataTable').dataTable({
+                    "sPaginationType": "full_numbers",
+                    "sDom": 'f<"toolbar">lrtip',
+                    "oLanguage": {
+                        "sProcessing": "Processando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "Não foram encontrados resultados",
+                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando de 0 até 0 de 0 registros",
+                        "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "oPaginate": {
+                            "sFirst": "Primeiro",
+                            "sPrevious": "Anterior",
+                            "sNext": "Seguinte",
+                            "sLast": "Último"
+                        }
+                    }
+                });
+            });
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month'
+                },
+                height: 500,
+                axisFormat: 'H:mm',
+                lang: 'pt-br',
+                weekNumbers: false,
+                editable: false,
+                events: '/tarefas/eventos',
+                eventRender: function(event, element) {
+                    element.tooltip({
+                        title: 'Solicitante: ' + event.solicitante,
+                        placement: 'right'
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

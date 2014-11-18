@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Contas/Caixas</h2>
+        <hr/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a href="/contas/add" class="btn btn-primary">Nova Conta</a>
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-responsive table-bordered table-striped dataTable">
+            <thead>
+                <tr>
+                    <th class="id">#</th>
+                    <th>Nome</td>
+                    <th class="acoes">Ações</th>
+                </tr>   
+            </thead>
+            <tbody>
+                <?php foreach ($this->contas as $conta) : ?>
+                    <tr>
+                        <td class="id"><?php echo $conta->id; ?></td>
+                        <td><?php echo $conta->nome; ?></td>
+                        <td class="acoes">
+                            <a href="/contas/edit/id/<?php echo $conta->id; ?>" class="btn btn-xs btn-success" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a href="/conta/remover/id/<?php echo $conta->id; ?>" class="btn btn-xs btn-danger" title="Excluir"><i class="glyphicon glyphicon-trash"></i></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
