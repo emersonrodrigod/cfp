@@ -19,3 +19,74 @@
 .algCenter {text-align: center;}
 .id {text-align: center; width: 10%;}
 .acoes {text-align: center; width: 15%;}
+.valores{text-align: right; width: 10%;}
+.valorReceita {color: #18bc9c;}
+.valorReceita:before {
+    content: "+ "
+}
+.valorDespesa {color: #e74c3c;}
+.valorDespesa:before {
+    content: "- "
+}
+
+.admin_estatisticas_contas_caixa {
+    width: 261px;
+    float: right;
+}
+
+.admin_estatisticas_contas_caixa_linha {
+    width: 100%;
+    font-size: 15px;
+    float: left;
+    line-height: 21px;
+    text-align: right;
+    margin-top: 4px;
+}
+
+.admin_estatisticas_contas_caixa_linha_titulo {
+    color: #A7A7A7;
+    font-size: 11px;
+    float: left;
+    width: 100px;
+    text-align: left;
+}
+
+.admin_estatisticas_contas_caixa_linha_valor {
+    float: left;
+    width: 160px;
+    text-align: right;
+}
+
+.admin_estatisticas_contas_caixa_linha_de {
+    float: left;
+    width: 260px;
+    text-align: right;
+    color: #A7A7A7;
+    font-size: 9px;
+    line-height: 10px;
+}
+
+.admin_estatisticas_contas_caixa_linha_total {
+    font-size: 31px;
+    line-height: 35px;
+    border-top: 1px dashed #ccc;
+    padding-top: 5px;
+    margin-top: 10px;
+}
+
+.admin_estatisticas_contas_caixa_linha_total_texto {
+    color: #A7A7A7;
+    font-size: 11px;
+    text-align: right;
+    line-height: 12px;
+    margin-top: 0px;
+}
+
+.fonte_verde {
+    color: #288528;
+}
+
+.fonte_vermelho {
+    color: #D33C3C;
+}
+

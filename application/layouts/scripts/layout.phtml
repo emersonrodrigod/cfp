@@ -59,9 +59,7 @@
                         </li> -->
                         <li><a href="/">Painel de Controle</a></li>
 
-                        <li><a href="/despesas">Despesas</a></li>
-
-                        <li><a href="/receitas">Receitas</a></li>
+                        <li><a href="/lancamentos">Lançamentos</a></li>
 
                         <li><a href="/receitas">Cartões de Crédito</a></li>
 
@@ -117,6 +115,8 @@
                         initialState: 'collapsed'
                     }
             );
+
+            $('[data-toggle="tooltip"]').tooltip();
 
             $(function() {
                 var oTable = $('.dataTable').dataTable({

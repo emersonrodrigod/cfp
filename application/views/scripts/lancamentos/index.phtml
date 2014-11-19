@@ -1,0 +1,178 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Lançamentos</h2>
+        <hr/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a href="/contas/add" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-arrow-up"></i> Incluir Receita</a>
+        <a href="/contas/add" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-arrow-down"></i> Incluir Despesa</a>
+        <a href="/contas/add" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-resize-vertical"></i> Transferência entre contas</a>
+
+        <div class="btn-group pull-right btn-group-sm">
+            <a href="#" class="btn btn-default" title="Mês Anterior" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-arrow-left"></i></a>
+            <a href="#" class="btn btn-default" style="width: 518px;"><span style="font-weight: bold;">Novembro de 2014</span></a>
+            <a href="#" class="btn btn-default" title="Próximo Mês" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="filtros" class="pull-right">
+            <div class="btn-group btn-group-xs">
+                <a href="#" class="btn btn-default">Receitas e Despesas</a>
+                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#">
+                            <span style="background:#117511;margin-left: 2px;margin-right: 7px;width: 10px;float: left;margin-top: 6px;height: 10px;border-radius: 10px;"></span>
+                            Somente Receitas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span style="background:#D32121;margin-left: 2px;margin-right: 7px;width: 10px;float: left;margin-top: 6px;height: 10px;border-radius: 10px;"></span>
+                            Somente Despesas
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="btn-group btn-group-xs">
+                <a href="#" class="btn btn-default">Todas as Categorias</a>
+                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Moradia</a></li>
+                    <li><a href="#">Alimentação</a></li>
+                    <li><a href="#">Transporte</a></li>
+                </ul>
+            </div>
+
+            <div class="btn-group btn-group-xs">
+                <a href="#" class="btn btn-default">Todas as Situações</a>
+                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Contas Pagas/Recebidas</a></li>
+                    <li><a href="#">Contas não Pagas/Recebidas</a></li>
+                </ul>
+            </div>
+
+            <div class="btn-group btn-group-xs">
+                <a href="#" class="btn btn-default">Todas as Contas</a>
+                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Caixa</a></li>
+                    <li><a href="#">Banco Itaú</a></li>
+                    <li><a href="#">Banco Hsbc</a></li>
+                    <li><a href="#">Banco Caixa</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th class="valores">Valor</th>
+                    <th class="acoes">Situação</th>
+                    <th class="acoes">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="label label-success"><i class="glyphicon glyphicon-tag"></i> Salários</span> <span class="small">Recebimento de salário - Emerson</span></td>
+                    <td class="valores"><span class="small valorReceita">R$ 1.200,00</span></td>
+                    <td class="acoes"><span class="label label-success"><small>Pago em 14/11/2014</small></span></td>
+                    <td class="acoes">
+                        <a href="#" class="btn btn-default btn-xs">Estornar</a>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td><span class="label label-danger"><i class="glyphicon glyphicon-tag"></i> Aluguel</span> <span class="small">Aluguel mes 11/2014</span></td>
+                    <td class="valores"><span class="small valorDespesa">R$ 600,00</span></td>
+                    <td class="acoes"><span class="label label-danger"><small>Não Pago</small></span></td>
+                    <td class="acoes">
+                        <a href="#" class="btn btn-success btn-xs">Pagar</a>
+                        <a href="#" class="btn btn-danger btn-xs">Excluir</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><span class="label label-danger"><i class="glyphicon glyphicon-tag"></i> Aluguel</span> <span class="small">Aluguel mes 11/2014</span></td>
+                    <td class="valores"><span class="small valorDespesa">R$ 600,00</span></td>
+                    <td class="acoes"><span class="label label-danger"><small>Não Pago</small></span></td>
+                    <td class="acoes">
+                        <a href="#" class="btn btn-success btn-xs">Pagar</a>
+                        <a href="#" class="btn btn-danger btn-xs">Excluir</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><span class="label label-danger"><i class="glyphicon glyphicon-tag"></i> Aluguel</span> <span class="small">Aluguel mes 11/2014</span></td>
+                    <td class="valores"><span class="small valorDespesa">R$ 600,00</span></td>
+                    <td class="acoes"><span class="label label-danger"><small>Não Pago</small></span></td>
+                    <td class="acoes">
+                        <a href="#" class="btn btn-success btn-xs">Pagar</a>
+                        <a href="#" class="btn btn-danger btn-xs">Excluir</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><span class="label label-success"><i class="glyphicon glyphicon-tag"></i> Salários</span> <span class="small">Recebimento de salário - Emerson</span></td>
+                    <td class="valores"><span class="small valorReceita">R$ 1.200,00</span></td>
+                    <td class="acoes"><span class="label label-success"><small>Pago em 14/11/2014</small></span></td>
+                    <td class="acoes">
+                        <a href="#" class="btn btn-default btn-xs">Estornar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <hr/>
+
+        <div class="admin_estatisticas_contas_caixa">
+            <div class="admin_estatisticas_contas_caixa_linha">
+                <span class="admin_estatisticas_contas_caixa_linha_titulo">Saldo Anterior</span>
+                <span class="admin_estatisticas_contas_caixa_linha_valor" style="font-size:10px;;">
+                    <span class="fonte_verde">+ R$ 0,00</span> 
+                </span>
+            </div>
+
+            <div class="admin_estatisticas_contas_caixa_linha">
+                <span class="admin_estatisticas_contas_caixa_linha_titulo">Entradas do período</span>
+                <span class="admin_estatisticas_contas_caixa_linha_valor fonte_verde" title="2 receitas cadastradas">+ R$ 1.500,00</span>
+                <span class="admin_estatisticas_contas_caixa_linha_de">previsto + R$ 1.500,00</span>
+            </div>
+
+            <div class="admin_estatisticas_contas_caixa_linha">
+                <span class="admin_estatisticas_contas_caixa_linha_titulo">Saídas do período</span>
+                <span class="admin_estatisticas_contas_caixa_linha_valor fonte_vermelho" title="0 despesas cadastradas">- R$ 0,00</span>
+                <span class="admin_estatisticas_contas_caixa_linha_de">previsto - R$ 0,00</span>
+            </div>
+
+            <div class="admin_estatisticas_contas_caixa_linha admin_estatisticas_contas_caixa_linha_total">
+                <span class="fonte_verde">+ R$ 1.500,00</span>
+            </div>
+
+            <div class="admin_estatisticas_contas_caixa_linha admin_estatisticas_contas_caixa_linha_total_texto">
+                previsto <span class="fonte_verde">+ R$ 1.500,00</span>
+            </div>
+        </div>
+
+    </div>
+</div>
