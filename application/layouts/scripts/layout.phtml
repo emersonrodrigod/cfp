@@ -31,8 +31,6 @@
                     }
             );
 
-            $('[data-toggle="tooltip"]').tooltip();
-
             $(function() {
                 var oTable = $('.dataTable').dataTable({
                     "sPaginationType": "full_numbers",
@@ -55,26 +53,6 @@
                         }
                     }
                 });
-            });
-
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month'
-                },
-                height: 500,
-                axisFormat: 'H:mm',
-                lang: 'pt-br',
-                weekNumbers: false,
-                editable: false,
-                events: '/tarefas/eventos',
-                eventRender: function(event, element) {
-                    element.tooltip({
-                        title: 'Solicitante: ' + event.solicitante,
-                        placement: 'right'
-                    });
-                }
             });
         </script>
 
@@ -162,5 +140,28 @@
             <?php echo $this->layout()->content; ?>
 
         </div>
+        <script>
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month'
+                },
+                height: 500,
+                axisFormat: 'H:mm',
+                lang: 'pt-br',
+                weekNumbers: false,
+                editable: false,
+                events: '/tarefas/eventos',
+                eventRender: function(event, element) {
+                    element.tooltip({
+                        title: 'Solicitante: ' + event.solicitante,
+                        placement: 'right'
+                    });
+                }
+            });
+        </script>
     </body>
 </html>

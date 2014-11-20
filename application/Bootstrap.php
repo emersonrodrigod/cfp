@@ -13,4 +13,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         Zend_Registry::set('currency', $currency);
     }
 
+    public function _initMes() {
+        date_default_timezone_set('America/Sao_Paulo');
+        Zend_Date::setOptions(array('extend_month' => true));
+        $data = new Zend_Date();
+
+        $mes = $data->get(Zend_Date::MONTH);
+        $ano = $data->get(Zend_Date::YEAR_8601);
+
+        $storage = new Zend_Session_Namespace('data');
+
+        if (!isset($storage->mes)) {
+            $storage->mes = $mes;
+            $storage->ano = $ano;
+        }
+    }
+
 }

@@ -12,9 +12,11 @@
         <a href="/contas/add" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-resize-vertical"></i> Transferência entre contas</a>
 
         <div class="btn-group pull-right btn-group-sm">
-            <a href="#" class="btn btn-default" title="Mês Anterior" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-arrow-left"></i></a>
-            <a href="#" class="btn btn-default" style="width: 518px;"><span style="font-weight: bold;">Novembro de 2014</span></a>
-            <a href="#" class="btn btn-default" title="Próximo Mês" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-arrow-right"></i></a>
+            <a href="javascript:void(0);" class="btn btn-default" title="Mês Anterior" data-toggle="tooltip" data-placement="top" data-value="-1" id="anterior"><i class="glyphicon glyphicon-arrow-left"></i></a>
+            <a href="javascript:void(0);" class="btn btn-default" style="width: 518px;">
+                <span style="font-weight: bold;" id="descricaoData"><?php echo $this->mes; ?> de <?php echo $this->ano; ?></span>
+            </a>
+            <a href="javascript:void(0);" class="btn btn-default" title="Próximo Mês" data-toggle="tooltip" data-placement="top" data-value="1" id="proximo"><i class="glyphicon glyphicon-arrow-right"></i></a>
         </div>
     </div>
 </div>
@@ -116,6 +118,18 @@
 
             id.attr('data-value', classe.attr('data-value'));
             classe.attr('data-value', valor);
+        },
+        trocaMes: function(id) {
+            var valor = id.attr('data-value');
+
+            $.post("/lancamentos/troca", {valor: valor}, function(data) {
+                $('#carregando').show();
+                var dados = jQuery.parseJSON(data);
+
+                $("#descricaoData").text(dados['mes'] + ' de ' + dados['ano']);
+                $("#lancamentos").load("/lancamentos/carrega");
+                $("#carregando").hide();
+            });
         }
     };
 
@@ -137,6 +151,14 @@
     $('.filtro-caixa').click(function() {
         lancamentosUI.trocaInformacoes($('#filtro-caixa'), $(this));
         lancamentosUI.filtrar();
+    });
+
+    $('#anterior').click(function() {
+        lancamentosUI.trocaMes($(this));
+    });
+
+    $('#proximo').click(function() {
+        lancamentosUI.trocaMes($(this));
     });
 
 

@@ -8,54 +8,25 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td><span class="label label-success"><i class="glyphicon glyphicon-tag"></i> Salários</span> <span class="small">Recebimento de salário - Emerson</span></td>
-            <td class="valores"><span class="small valorReceita">R$ 1.200,00</span></td>
-            <td class="acoes"><span class="label label-success"><small>Pago em 14/11/2014</small></span></td>
-            <td class="acoes">
-                <a href="#" class="btn btn-default btn-xs">Estornar</a>
-            </td>
 
-        </tr>
+        <?php foreach ($this->lancamentos as $lancamento) : ?>
+            <tr>
+                <td>
+                    <span class="label <?php echo $lancamento->getLabel(); ?>">
+                        <i class="glyphicon glyphicon-tag"></i> <?php echo $lancamento->getCategoria()->nome; ?>
+                    </span> &nbsp;
+                    <span class="small"><?php echo $lancamento->titulo; ?></span>
+                </td>
 
-        <tr>
-            <td><span class="label label-danger"><i class="glyphicon glyphicon-tag"></i> Aluguel</span> <span class="small">Aluguel mes 11/2014</span></td>
-            <td class="valores"><span class="small valorDespesa">R$ 600,00</span></td>
-            <td class="acoes"><span class="label label-danger"><small>Não Pago</small></span></td>
-            <td class="acoes">
-                <a href="#" class="btn btn-success btn-xs">Pagar</a>
-                <a href="#" class="btn btn-danger btn-xs">Excluir</a>
-            </td>
-        </tr>
+                <td class="valores"><span class="small <?php echo $lancamento->getValorLabel(); ?>"><?php echo $lancamento->getValor(); ?></span></td>
+                <td class="acoes"><span class="label <?php echo $lancamento->getLabelSituacao(); ?>"><small><?php echo $lancamento->getSituacao(); ?></small></span></td>
+                <td class="acoes">
+                    <a href="#" class="btn btn-default btn-xs">Estornar</a>
+                </td>
 
-        <tr>
-            <td><span class="label label-danger"><i class="glyphicon glyphicon-tag"></i> Aluguel</span> <span class="small">Aluguel mes 11/2014</span></td>
-            <td class="valores"><span class="small valorDespesa">R$ 600,00</span></td>
-            <td class="acoes"><span class="label label-danger"><small>Não Pago</small></span></td>
-            <td class="acoes">
-                <a href="#" class="btn btn-success btn-xs">Pagar</a>
-                <a href="#" class="btn btn-danger btn-xs">Excluir</a>
-            </td>
-        </tr>
+            </tr>
 
-        <tr>
-            <td><span class="label label-danger"><i class="glyphicon glyphicon-tag"></i> Aluguel</span> <span class="small">Aluguel mes 11/2014</span></td>
-            <td class="valores"><span class="small valorDespesa">R$ 600,00</span></td>
-            <td class="acoes"><span class="label label-danger"><small>Não Pago</small></span></td>
-            <td class="acoes">
-                <a href="#" class="btn btn-success btn-xs">Pagar</a>
-                <a href="#" class="btn btn-danger btn-xs">Excluir</a>
-            </td>
-        </tr>
-
-        <tr>
-            <td><span class="label label-success"><i class="glyphicon glyphicon-tag"></i> Salários</span> <span class="small">Recebimento de salário - Emerson</span></td>
-            <td class="valores"><span class="small valorReceita">R$ 1.200,00</span></td>
-            <td class="acoes"><span class="label label-success"><small>Pago em 14/11/2014</small></span></td>
-            <td class="acoes">
-                <a href="#" class="btn btn-default btn-xs">Estornar</a>
-            </td>
-        </tr>
+        <?php endforeach; ?>
     </tbody>
 </table>
 
@@ -65,27 +36,33 @@
     <div class="admin_estatisticas_contas_caixa_linha">
         <span class="admin_estatisticas_contas_caixa_linha_titulo">Saldo Anterior</span>
         <span class="admin_estatisticas_contas_caixa_linha_valor" style="font-size:10px;;">
-            <span class="fonte_verde">+ R$ 0,00</span> 
+            <span class="<?php echo ($this->saldoAnterior < 0 ? 'fonte_vermelho' : 'fonte_verde'); ?>">
+                <?php echo Zend_Registry::get('currency')->toCurrency($this->saldoAnterior); ?>
+            </span> 
         </span>
     </div>
 
     <div class="admin_estatisticas_contas_caixa_linha">
         <span class="admin_estatisticas_contas_caixa_linha_titulo">Entradas do período</span>
-        <span class="admin_estatisticas_contas_caixa_linha_valor fonte_verde" title="2 receitas cadastradas">+ R$ 1.500,00</span>
-        <span class="admin_estatisticas_contas_caixa_linha_de">previsto + R$ 1.500,00</span>
+        <span class="admin_estatisticas_contas_caixa_linha_valor fonte_verde" title="2 receitas cadastradas">+ <?php echo Zend_Registry::get('currency')->toCurrency($this->totalReceitas); ?></span>
+        <span class="admin_estatisticas_contas_caixa_linha_de">previsto + <?php echo Zend_Registry::get('currency')->toCurrency($this->previsaoReceitas); ?></span>
     </div>
 
     <div class="admin_estatisticas_contas_caixa_linha">
         <span class="admin_estatisticas_contas_caixa_linha_titulo">Saídas do período</span>
-        <span class="admin_estatisticas_contas_caixa_linha_valor fonte_vermelho" title="0 despesas cadastradas">- R$ 0,00</span>
-        <span class="admin_estatisticas_contas_caixa_linha_de">previsto - R$ 0,00</span>
+        <span class="admin_estatisticas_contas_caixa_linha_valor fonte_vermelho" title="0 despesas cadastradas">- <?php echo Zend_Registry::get('currency')->toCurrency($this->totalDespesas); ?></span>
+        <span class="admin_estatisticas_contas_caixa_linha_de">previsto - <?php echo Zend_Registry::get('currency')->toCurrency($this->previsaoDespesas); ?></span>
     </div>
 
     <div class="admin_estatisticas_contas_caixa_linha admin_estatisticas_contas_caixa_linha_total">
-        <span class="fonte_verde">+ R$ 1.500,00</span>
+        <span class="<?php echo ($this->saldoBalanco < 0 ? 'fonte_vermelho' : 'fonte_verde'); ?>">
+            <?php echo Zend_Registry::get('currency')->toCurrency($this->saldoBalanco); ?>
+        </span>
     </div>
 
     <div class="admin_estatisticas_contas_caixa_linha admin_estatisticas_contas_caixa_linha_total_texto">
-        previsto <span class="fonte_verde">+ R$ 1.500,00</span>
+        previsto <span class="<?php echo ($this->saldoBalancoPrevisto < 0 ? 'fonte_vermelho' : 'fonte_verde'); ?>">
+            <?php echo Zend_Registry::get('currency')->toCurrency($this->saldoBalancoPrevisto); ?>
+        </span>
     </div>
 </div>
