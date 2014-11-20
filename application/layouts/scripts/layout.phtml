@@ -14,6 +14,70 @@
         <link href="/css/fullcalendar.print.css" rel="stylesheet" media="print">
         <link rel="stylesheet" href="/css/app.css">
 
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/calendar/js/underscore-min.js"></script>
+        <script type="text/javascript" src="/js/moment.min.js"></script>
+        <script type="text/javascript" src="/js/fullcalendar.min.js"></script>
+        <script type="text/javascript" src="/js/lang-all.js"></script>
+        <script type="text/javascript" src="/jquery-tree/js/jquery.treegrid.js"></script>
+        <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+        <script>
+            $('.tree').treegrid(
+                    {
+                        initialState: 'collapsed'
+                    }
+            );
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $(function() {
+                var oTable = $('.dataTable').dataTable({
+                    "sPaginationType": "full_numbers",
+                    "sDom": 'f<"toolbar">lrtip',
+                    "oLanguage": {
+                        "sProcessing": "Processando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "Não foram encontrados resultados",
+                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando de 0 até 0 de 0 registros",
+                        "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "oPaginate": {
+                            "sFirst": "Primeiro",
+                            "sPrevious": "Anterior",
+                            "sNext": "Seguinte",
+                            "sLast": "Último"
+                        }
+                    }
+                });
+            });
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month'
+                },
+                height: 500,
+                axisFormat: 'H:mm',
+                lang: 'pt-br',
+                weekNumbers: false,
+                editable: false,
+                events: '/tarefas/eventos',
+                eventRender: function(event, element) {
+                    element.tooltip({
+                        title: 'Solicitante: ' + event.solicitante,
+                        placement: 'right'
+                    });
+                }
+            });
+        </script>
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -98,69 +162,5 @@
             <?php echo $this->layout()->content; ?>
 
         </div>
-
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="/bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/calendar/js/underscore-min.js"></script>
-        <script type="text/javascript" src="/js/moment.min.js"></script>
-        <script type="text/javascript" src="/js/fullcalendar.min.js"></script>
-        <script type="text/javascript" src="/js/lang-all.js"></script>
-        <script type="text/javascript" src="/jquery-tree/js/jquery.treegrid.js"></script>
-        <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
-        <script>
-            $('.tree').treegrid(
-                    {
-                        initialState: 'collapsed'
-                    }
-            );
-
-            $('[data-toggle="tooltip"]').tooltip();
-
-            $(function() {
-                var oTable = $('.dataTable').dataTable({
-                    "sPaginationType": "full_numbers",
-                    "sDom": 'f<"toolbar">lrtip',
-                    "oLanguage": {
-                        "sProcessing": "Processando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "Não foram encontrados resultados",
-                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                        "sInfoEmpty": "Mostrando de 0 até 0 de 0 registros",
-                        "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "oPaginate": {
-                            "sFirst": "Primeiro",
-                            "sPrevious": "Anterior",
-                            "sNext": "Seguinte",
-                            "sLast": "Último"
-                        }
-                    }
-                });
-            });
-
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month'
-                },
-                height: 500,
-                axisFormat: 'H:mm',
-                lang: 'pt-br',
-                weekNumbers: false,
-                editable: false,
-                events: '/tarefas/eventos',
-                eventRender: function(event, element) {
-                    element.tooltip({
-                        title: 'Solicitante: ' + event.solicitante,
-                        placement: 'right'
-                    });
-                }
-            });
-        </script>
     </body>
 </html>

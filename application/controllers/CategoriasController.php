@@ -4,7 +4,7 @@ class CategoriasController extends Zend_Controller_Action {
 
     public function indexAction() {
         $categoria = new Categoria();
-        $this->view->categorias = $categoria->fetchAll('id_pai is null');
+        $this->view->categorias = $categoria->fetchAll('id_pai is null','tipo desc');
     }
 
     public function addAction() {
