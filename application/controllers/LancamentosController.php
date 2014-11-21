@@ -12,8 +12,21 @@ class LancamentosController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
+        $storage = new Zend_Session_Namespace('data');
+        $storage->mes = date("m");
+        $storage->ano = date("Y");
+
+        $this->_mes = $storage->mes;
+        $this->_ano = $storage->ano;
+
         $this->view->mes = Util::mesExtenso($this->_mes);
         $this->view->ano = $this->_ano;
+
+        $categoria = new Categoria();
+        $this->view->categorias = $categoria->fetchAll('id_pai is null', 'tipo desc');
+
+        $conta = new Conta();
+        $this->view->contas = $conta->fetchAll();
     }
 
     public function trocaAction() {
@@ -77,7 +90,7 @@ class LancamentosController extends Zend_Controller_Action {
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            //print_r($data);
+            $this->view->lancamentos = $lancamento->lista($this->_mes, $this->_ano, $data);
         }
     }
 

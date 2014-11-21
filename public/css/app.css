@@ -28,6 +28,9 @@
 .valorDespesa:before {
     content: "- "
 }
+.filtro-caixa {
+    text-transform: lowercase;
+}
 
 .admin_estatisticas_contas_caixa {
     width: 261px;

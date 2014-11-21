@@ -43,9 +43,9 @@
                 <a href="#" class="btn btn-default" id="filtro-categoria" data-value="">Todas as Categorias</a>
                 <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="javascript:void(0);" data-value="1" class="filtro-categoria">Moradia</a></li>
-                    <li><a href="javascript:void(0);" data-value="2" class="filtro-categoria">Alimentação</a></li>
-                    <li><a href="javascript:void(0);" data-value="3" class="filtro-categoria">Transporte</a></li>
+                    <?php foreach ($this->categorias as $categoria) : ?>
+                        <li><a href="javascript:void(0);" data-value="<?php echo $categoria->id; ?>" class="filtro-categoria"><?php echo $categoria->nome; ?></a></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
 
@@ -62,10 +62,9 @@
                 <a href="javascript:void(0);" class="btn btn-default" data-value="" id="filtro-caixa">Todas as Contas</a>
                 <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="javascript:void(0);" data-value="0" class="filtro-caixa">Caixa</a></li>
-                    <li><a href="javascript:void(0);" data-value="1" class="filtro-caixa">Banco Itaú</a></li>
-                    <li><a href="javascript:void(0);" data-value="2" class="filtro-caixa">Banco Hsbc</a></li>
-                    <li><a href="javascript:void(0);" data-value="3" class="filtro-caixa">Banco Caixa</a></li>
+                    <?php foreach ($this->contas as $conta) : ?>
+                        <li><a href="javascript:void(0);" data-value="<?php echo $conta->id; ?>" class="filtro-caixa"><?php echo $conta->nome; ?></a></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>
