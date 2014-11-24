@@ -135,9 +135,17 @@ class LancamentosController extends Zend_Controller_Action {
     public function pagarAction() {
         $this->_helper->layout()->disableLayout();
         $this->getHelper('viewRenderer')->setNoRender();
-        
+
         $lancamento = new Lancamento();
         $lancamento->pagar($this->getParam('id'));
+    }
+
+    public function estornarAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->getHelper('viewRenderer')->setNoRender();
+
+        $lancamento = new Lancamento();
+        $lancamento->estornar($this->getParam('id'));
     }
 
 }

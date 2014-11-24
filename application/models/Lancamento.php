@@ -217,6 +217,33 @@ class Lancamento extends Zend_Db_Table_Abstract {
             $historico = "Pagamento referente a " . $atual->titulo;
         } else {
             $historico = "Recebimento referente a " . $atual->titulo;
+            $valor = $atual->valor;
+        }
+
+        $dadosExtrato = array(
+            'id_conta' => $atual->id_conta,
+            'valor' => $valor,
+            'id_lancamento' => $idLancamento,
+            'historico' => $historico
+        );
+
+        $this->adicionarExtrato($dadosExtrato);
+    }
+
+    public function estornar($idLancamento) {
+        $atual = $this->find($idLancamento)->current();
+
+        $atual->dataPagamento = date("Y-m-d");
+        $atual->situacao = 0;
+        $atual->save();
+
+        if ($atual->tipo == 'R') {
+            $valor = $atual->valor * -1;
+
+            $historico = "Estorno de Pagamento referente a " . $atual->titulo;
+        } else {
+            $valor = $atual->valor;
+            $historico = "Estorno Recebimento referente a " . $atual->titulo;
         }
 
         $dadosExtrato = array(

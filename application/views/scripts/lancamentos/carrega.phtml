@@ -32,7 +32,7 @@
                     <?php endif; ?>
 
                     <?php if ($lancamento->situacao == 1) : ?>  
-                        <a href="#" class="btn btn-default btn-xs">Estornar</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-xs" id="estornar" data-value="<?php echo $lancamento->id; ?>">Estornar</a>
                     <?php endif; ?>
                 </td>
 
@@ -88,6 +88,25 @@
             var id = $(this).attr('data-value');
 
             $.get("/lancamentos/pagar/id/" + id, function() {
+                $('#carregando').show();
+                $("#lancamentos").load("/lancamentos/carrega");
+                $("#carregando").hide();
+            });
+
+
+        } else {
+            return false;
+        }
+    });
+    
+     $('#estornar').click(function(e) {
+        e.preventDefault();
+        var answer = confirm("Confirma o estorno deste lançamento?");
+        if (answer) {
+
+            var id = $(this).attr('data-value');
+
+            $.get("/lancamentos/estornar/id/" + id, function() {
                 $('#carregando').show();
                 $("#lancamentos").load("/lancamentos/carrega");
                 $("#carregando").hide();
