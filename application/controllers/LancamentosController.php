@@ -94,4 +94,13 @@ class LancamentosController extends Zend_Controller_Action {
         }
     }
 
+    public function addAction() {
+        $categoria = new Categoria();
+        $this->view->categorias = $categoria->fetchAll("id_pai is null and tipo = 'R'");
+        $this->view->tipo = $this->getParam('tipo');
+
+        $conta = new Conta();
+        $this->view->contas = $conta->fetchAll();
+    }
+
 }

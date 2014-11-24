@@ -1,0 +1,154 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Adicionar Receita</h2>
+        <hr/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" action="" id="form" class="well">
+            <div class="row">
+                <div class="form-group col-md-5">
+                    <label class="control-label" for="titulo">Título</label>
+                    <input type="text" name="titulo" class="form-control" required="true">
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label class="control-label" for="tipo">Tipo de Conta</label>
+                    <select class="form-control" id="tipo" name="tipo" required="true">
+                        <option value="R" <?php echo ($this->tipo == 'receita' ? 'selected' : ''); ?>>Receita</option>
+                        <option value="D" <?php echo ($this->tipo == 'despesa' ? 'selected' : ''); ?>>Despesa</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label class="control-label" for="situacao">Situação</label>
+                    <select class="form-control" id="situacao" name="situacao" required="true">
+                        <option value="0">Não pago</option>
+                        <option value="1">Pago</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label class="control-label" for="pagamento">Tipo de Pagamento</label>
+                    <select class="form-control" id="pagamento" name="pagamento" required="true">
+                        <option value="0">Pagamento Único</option>
+                        <option value="1">Parcelamento</option>
+                        <option value="2">Fixo (Recorrente)</option>
+                    </select>
+                </div>
+
+                <div id="parcelamento" style="display: none">
+                    <div class="form-group col-md-2">
+                        <label class="control-label" for="parcelas">Nº de Parcelas</label>
+                        <input type="text" name="parcelas" required="true" class="form-control">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label class="control-label" for="periodicidade">Periodicidade</label>
+                        <select class="form-control" id="periodicidade" name="periodicidade" required="true">
+                            <option value="D">Dias</option>
+                            <option value="M">Meses</option>
+                            <option value="A">Anos</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2" id="recorrente" style="display: none;">
+                    <label class="control-label" for="periodicidade">Periodicidade</label>
+                    <select class="form-control" id="periodicidade" name="periodicidade" required="true">
+                        <option value="D">Dias</option>
+                        <option value="M">Meses</option>
+                        <option value="A">Anos</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label class="control-label" for="valor">Valor Total</label>
+                    <input type="text" name="valor" required="true" class="form-control price">
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label class="control-label" for="vencimento">Data de Vencimento</label>
+                    <input type="text" name="vencimento" required="true" class="form-control datepicker">
+                </div>
+            </div>
+
+            <div class="form-group col-md-12" id="hack" style="display: none;"></div>
+
+            <div class="row">
+
+                <div class="form-group col-md-3">
+                    <label class="control-label" for="id_categoria">Categoria</label>
+                    <select class="form-control" id="categoria" name="id_categoria" required="true">
+                        <option value="">Selecione....</option>
+                        <?php foreach ($this->categorias as $categoria) : ?>
+                            <option value="<?php echo $categoria->id; ?>"><?php echo $categoria->nome; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label class="control-label" for="id_subcategoria">Sub-Categoria</label>
+                    <select class="form-control" id="subcategoria" name="id_subcategoria" required="true">
+                        <option value="">Selecione uma categoria antes...</option>
+                        <option value="1">Selecione uma categoria antes...</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label class="control-label" for="id_conta">Conta/Caixa</label>
+                    <select class="form-control" id="conta" name="id_conta" required="true">
+                        <option value="">Selecione....</option>
+                        <?php foreach ($this->contas as $conta) : ?>
+                            <option value="<?php echo $conta->id; ?>"><?php echo $conta->nome; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12" style="margin-top: 20px !important;">
+                    <button type="submit" class="btn btn-primary">Salvar Dados</button>
+                    <a href="/lancamentos" class="btn btn-default">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    $('#form').bootstrapValidator();
+
+    $("#abreAdicionais").click(function() {
+        $("#adicionais").toggle();
+
+        if ($("#adicionais").is(':visible')) {
+            $("#icone").attr('class', 'glyphicon glyphicon-chevron-up');
+        }
+
+        $("#icone").attr('class', 'glyphicon glyphicon-chevron-down');
+    });
+
+    $("#pagamento").change(function() {
+        $("#parcelamento").hide();
+        $("#recorrente").hide();
+        $("#hack").hide();
+
+        if ($(this).val() == 1) {
+            $("#parcelamento").show();
+            $("#hack").show();
+        }
+        else {
+            if ($(this).val() == 2) {
+                $("#recorrente").show();
+            }
+        }
+    });
+
+</script>

@@ -93,3 +93,12 @@
     color: #D33C3C;
 }
 
+.parcelamento {
+    display: none;
+}
+
+.error {
+    color: #D33c4c;
+    display: block;
+    margin:0;
+}

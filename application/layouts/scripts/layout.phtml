@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="/jquery-tree/css/jquery.treegrid.css">
         <link href="/css/fullcalendar.css" rel="stylesheet" media="screen">
         <link href="/css/fullcalendar.print.css" rel="stylesheet" media="print">
+        <link href="/validator/css/bootstrapValidator.css" rel="stylesheet">
+        <link href="/js/datepicker/css/datepicker.css" rel="stylesheet">
         <link rel="stylesheet" href="/css/app.css">
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -24,6 +26,12 @@
         <script type="text/javascript" src="/js/lang-all.js"></script>
         <script type="text/javascript" src="/jquery-tree/js/jquery.treegrid.js"></script>
         <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="/validator/js/bootstrapValidator.min.js"></script>
+        <script type="text/javascript" src="/validator/js/language/pt_BR.js"></script>
+        <script type="text/javascript" src="/js/jquery.maskMoney.min.js"></script>
+        <script type="text/javascript" src="/js/datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="/js/datepicker/js/locales/bootstrap-datepicker.pt-BR.js"></script>
+
         <script>
             $('.tree').treegrid(
                     {
@@ -52,6 +60,16 @@
                             "sLast": "Último"
                         }
                     }
+                });
+
+                $('.price').maskMoney({prefix: '', allowNegative: true, thousands: '.', decimal: ',', affixesStay: false});
+
+                $(".datepicker").datepicker({
+                    format: 'dd/mm/yyyy',
+                    language: 'pt-BR',
+                    viewMode: 2
+                }).on('change', function() {
+                    $('.datepicker').datepicker('hide');
                 });
             });
         </script>
