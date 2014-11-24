@@ -147,5 +147,13 @@ class LancamentosController extends Zend_Controller_Action {
         $lancamento = new Lancamento();
         $lancamento->estornar($this->getParam('id'));
     }
+    
+    public function excluirAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->getHelper('viewRenderer')->setNoRender();
+
+        $lancamento = new Lancamento();
+        $lancamento->excluir($this->getParam('id'));
+    }
 
 }

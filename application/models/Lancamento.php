@@ -4,6 +4,7 @@ class Lancamento extends Zend_Db_Table_Abstract {
 
     protected $_name = 'lancamento';
     protected $_rowClass = 'LancamentoRow';
+    protected $_dependentTables = array('ExtratoConta');
     protected $_referenceMap = array(
         'Categoria' => array(
             'refTableClass' => 'Categoria',
@@ -240,10 +241,10 @@ class Lancamento extends Zend_Db_Table_Abstract {
         if ($atual->tipo == 'R') {
             $valor = $atual->valor * -1;
 
-            $historico = "Estorno de Pagamento referente a " . $atual->titulo;
+            $historico = "Estorno de Recebimento referente a " . $atual->titulo;
         } else {
             $valor = $atual->valor;
-            $historico = "Estorno Recebimento referente a " . $atual->titulo;
+            $historico = "Estorno de Pagamento referente a " . $atual->titulo;
         }
 
         $dadosExtrato = array(
@@ -254,6 +255,19 @@ class Lancamento extends Zend_Db_Table_Abstract {
         );
 
         $this->adicionarExtrato($dadosExtrato);
+    }
+
+    public function excluir($idLancamento) {
+
+        $atual = $this->find($idLancamento)->current();
+
+        foreach ($atual->findDependentRowset('ExtratoConta') as $extrato) {
+
+            $e = new ExtratoConta();
+            $e->delete('id = ' . $extrato->id);
+        }
+
+        $atual->delete();
     }
 
 }

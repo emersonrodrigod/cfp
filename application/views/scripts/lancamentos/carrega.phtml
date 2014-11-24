@@ -28,11 +28,12 @@
                 <td class="acoes">
 
                     <?php if ($lancamento->situacao == 0) : ?>
-                        <a href="javascript:void(0)" class="btn btn-default btn-xs" id="pagar" data-value="<?php echo $lancamento->id; ?>">Pagar</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-xs pagar" data-value="<?php echo $lancamento->id; ?>">Pagar</a>
+                        <a href="javascript:void(0)" class="btn btn-danger btn-xs excluir" data-value="<?php echo $lancamento->id; ?>">Excluir</a>
                     <?php endif; ?>
 
                     <?php if ($lancamento->situacao == 1) : ?>  
-                        <a href="javascript:void(0)" class="btn btn-default btn-xs" id="estornar" data-value="<?php echo $lancamento->id; ?>">Estornar</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-xs estornar" data-value="<?php echo $lancamento->id; ?>">Estornar</a>
                     <?php endif; ?>
                 </td>
 
@@ -80,7 +81,7 @@
 </div>
 
 <script>
-    $('#pagar').click(function(e) {
+    $('.pagar').click(function(e) {
         e.preventDefault();
         var answer = confirm("Confirma o pagamento deste lançamento?");
         if (answer) {
@@ -88,6 +89,27 @@
             var id = $(this).attr('data-value');
 
             $.get("/lancamentos/pagar/id/" + id, function() {
+                $('#lancamentos').html('');
+                $('#carregando').show();
+                $("#lancamentos").load("/lancamentos/carrega");
+                $("#carregando").hide();
+            });
+
+
+        } else {
+            return false;
+        }
+    });
+
+    $('.estornar').click(function(e) {
+        e.preventDefault();
+        var answer = confirm("Confirma o estorno deste lançamento?");
+        if (answer) {
+
+            var id = $(this).attr('data-value');
+
+            $.get("/lancamentos/estornar/id/" + id, function() {
+                $('#lancamentos').html('');
                 $('#carregando').show();
                 $("#lancamentos").load("/lancamentos/carrega");
                 $("#carregando").hide();
@@ -99,14 +121,15 @@
         }
     });
     
-     $('#estornar').click(function(e) {
+    $('.excluir').click(function(e) {
         e.preventDefault();
-        var answer = confirm("Confirma o estorno deste lançamento?");
+        var answer = confirm("Confirma a exclusão deste lançamento?");
         if (answer) {
 
             var id = $(this).attr('data-value');
 
-            $.get("/lancamentos/estornar/id/" + id, function() {
+            $.get("/lancamentos/excluir/id/" + id, function() {
+                $('#lancamentos').html('');
                 $('#carregando').show();
                 $("#lancamentos").load("/lancamentos/carrega");
                 $("#carregando").hide();
