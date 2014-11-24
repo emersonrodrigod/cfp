@@ -4,7 +4,7 @@ class CategoriasController extends Zend_Controller_Action {
 
     public function indexAction() {
         $categoria = new Categoria();
-        $this->view->categorias = $categoria->fetchAll('id_pai is null','tipo desc');
+        $this->view->categorias = $categoria->fetchAll('id_pai is null', 'tipo desc');
     }
 
     public function addAction() {
@@ -46,7 +46,7 @@ class CategoriasController extends Zend_Controller_Action {
                 $atual->nome = $data['nome'];
                 $atual->id_pai = $data['id_pai'];
                 $atual->tipo = $data['tipo'];
-                
+
                 $atual->save();
                 $this->_helper->flashMessenger(array('success' => 'Categoria Alterada com sucesso!'));
                 $this->redirect("/categorias");
@@ -54,6 +54,17 @@ class CategoriasController extends Zend_Controller_Action {
                 $this->_helper->flashMessenger(array('error' => 'Desculpe, ocorreu um erro: ' . $e->getMessage()));
             }
         }
+    }
+
+    public function subcategoriaAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->getHelper('viewRenderer')->setNoRender();
+
+
+        $categoria = new Categoria();
+        $dados = $categoria->fetchAll("id_pai = " . $this->getParam('id_categoria'))->toArray();
+
+        echo Zend_Json_Encoder::encode($dados);
     }
 
 }

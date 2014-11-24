@@ -20,4 +20,39 @@ class Util {
         }
     }
 
+    public static function dataMysql($data) {
+        $dt = trim($data);
+
+        if (strstr($dt, "/")) {
+
+            $aux2 = explode("/", $dt);
+
+            $datai2 = $aux2[2] . "-" . $aux2[1] . "-" . $aux2[0];
+
+            return $datai2;
+        }
+    }
+
+    public static function dataToText($data) {
+        $dt = trim($data);
+
+        if (strstr($dt, "-")) {
+
+            $aux2 = explode("-", $dt);
+
+            $datai2 = $aux2[2] . "/" . $aux2[1] . "/" . $aux2[0];
+
+            return $datai2;
+        }
+    }
+
+    public static function currencyToMysql($currency) {
+
+        $toReturn = str_replace('.', '', $currency);
+        $toReturn = str_replace(',', '.', $currency);
+        $toReturn = str_replace('R$', '', $toReturn);
+        $toReturn = trim($toReturn);
+        return $toReturn;
+    }
+
 }

@@ -62,15 +62,20 @@
                     }
                 });
 
-                $('.price').maskMoney({prefix: '', allowNegative: true, thousands: '.', decimal: ',', affixesStay: false});
+                //$('.price').maskMoney({prefix: '', allowNegative: true, thousands: '.', decimal: ',', affixesStay: false});
 
-                $(".datepicker").datepicker({
+                /*$(".datepicker").datepicker({
                     format: 'dd/mm/yyyy',
                     language: 'pt-BR',
                     viewMode: 2
                 }).on('change', function() {
                     $('.datepicker').datepicker('hide');
-                });
+                });*/
+
+                $('.form-validate').bootstrapValidator({
+                    excluded: [':disabled', ':hidden', ':not(:visible)'],
+                    live: 'enabled'
+                }).find('.price').maskMoney({prefix: '', allowNegative: true, thousands: '.', decimal: ',', affixesStay: false});
             });
         </script>
 
@@ -156,6 +161,12 @@
 
             <?php echo $this->flashMessenger(); ?>
             <?php echo $this->layout()->content; ?>
+            
+            <footer>
+                <hr/>
+                <span class="small">Controle Financeiro Pessoal - Desenvolvedor Emerson Dário</span>
+                <hr/>
+            </footer>
 
         </div>
         <script>

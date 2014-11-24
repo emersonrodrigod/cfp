@@ -26,7 +26,7 @@ class Lancamento extends Zend_Db_Table_Abstract {
         if (is_null($filtros)) {
             return $this->fetchAll("MONTH(vencimento) = $mes and YEAR(vencimento) = $ano");
         } else {
-            return $this->fetchAll("MONTH(vencimento) = $mes and YEAR(vencimento) = $ano ". $this->montaFiltro($filtros));
+            return $this->fetchAll("MONTH(vencimento) = $mes and YEAR(vencimento) = $ano " . $this->montaFiltro($filtros));
         }
     }
 
@@ -93,22 +93,57 @@ class Lancamento extends Zend_Db_Table_Abstract {
         if ($filtros['tipo'] != '') {
             $where .= " and tipo = '" . $filtros['tipo'] . "'";
         }
-        
-        
+
+
         if ($filtros['categoria'] != '') {
             $where .= " and id_categoria = " . $filtros['categoria'];
         }
-        
+
         if ($filtros['situacao'] != '') {
             $where .= " and situacao = " . $filtros['situacao'];
         }
-        
+
         if ($filtros['caixa'] != '') {
             $where .= " and id_conta = " . $filtros['caixa'];
         }
-        
+
 
         return $where;
+    }
+
+    public function adicionar(array $data, $tipo, $parcelas) {
+        $data['parcelas'] = $parcelas;
+        $data['numeroParcela'] = 1;
+
+        if ($tipo == 0) {
+            return $this->insert($data);
+        } elseif ($tipo == 1) {
+
+            $data['valor'] = $data['valor'] / $parcelas;
+            $data['situacao'] = 0;
+
+            for ($i = 1; $i <= $parcelas; $i++) {
+                $data['numeroParcela'] = $i;
+                $vencimento = new Zend_Date(Util::dataToText($data['vencimento']));
+                if ($i > 1) {
+                    $vencimento->addMonth(1);
+                    $data['vencimento'] = $vencimento->get(Zend_Date::YEAR_8601) . '-' . $vencimento->get(Zend_Date::MONTH) . '-' . $vencimento->get(Zend_Date::DAY);
+                }
+
+                $this->insert($data);
+            }
+        } elseif ($tipo == 2) {
+            $data['situacao'] = 0;
+            $vencimento = new Zend_Date(Util::dataToText($data['vencimento']));
+            for ($i = 1; $i >= 12; $i++) {
+                if ($i > 1) {
+                    $vencimento->addMonth(1);
+                    $data['vencimento'] = $vencimento->get(Zend_Date::YEAR_8601) . '-' . $vencimento->get(Zend_Date::MONTH) . '-' . $vencimento->get(Zend_Date::DAY);
+                }
+
+                $this->insert($data);
+            }
+        }
     }
 
 }

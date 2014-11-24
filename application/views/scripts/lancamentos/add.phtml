@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h2>Adicionar Receita</h2>
+        <h2>Adicionando Receita/Despesa</h2>
         <hr/>
     </div>
 </div>
@@ -17,8 +17,8 @@
                 <div class="form-group col-md-2">
                     <label class="control-label" for="tipo">Tipo de Conta</label>
                     <select class="form-control" id="tipo" name="tipo" required="true">
-                        <option value="R" <?php echo ($this->tipo == 'receita' ? 'selected' : ''); ?>>Receita</option>
-                        <option value="D" <?php echo ($this->tipo == 'despesa' ? 'selected' : ''); ?>>Despesa</option>
+                        <option value="R" <?php echo ($this->tipo == 'R' ? 'selected' : ''); ?>>Receita</option>
+                        <option value="D" <?php echo ($this->tipo == 'D' ? 'selected' : ''); ?>>Despesa</option>
                     </select>
                 </div>
 
@@ -123,7 +123,31 @@
 
 <script>
 
-    $('#form').bootstrapValidator();
+    $(".datepicker").datepicker({
+        format: 'dd/mm/yyyy',
+        language: 'pt-BR',
+        viewMode: 2
+    }).on('change', function() {
+        $('.datepicker').datepicker('hide');
+        $('#form').bootstrapValidator('revalidateField', 'vencimento');
+    });
+
+    $('#form').bootstrapValidator({
+        excluded: [':hidden', ':not(:visible)'],
+        live: 'enabled'
+    }).find('.price').maskMoney({prefix: '', allowNegative: true, thousands: '.', decimal: ',', affixesStay: true});
+
+
+    $('#categoria').change(function() {
+        $("#subcategoria").html('<option value="">Carregando....</option>');
+        $.getJSON('/categorias/subcategoria', {id_categoria: $(this).val(), ajax: 'true'}, function(j) {
+            var options = '<option value="">Selecione uma Subcategoria</option>';
+            for (var i = 0; i < j.length; i++) {
+                options += '<option value="' + j[i].id + '">' + j[i].nome + '</option>';
+            }
+            $('#subcategoria').html(options).show();
+        });
+    });
 
     $("#abreAdicionais").click(function() {
         $("#adicionais").toggle();

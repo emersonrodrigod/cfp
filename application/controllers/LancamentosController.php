@@ -96,11 +96,40 @@ class LancamentosController extends Zend_Controller_Action {
 
     public function addAction() {
         $categoria = new Categoria();
-        $this->view->categorias = $categoria->fetchAll("id_pai is null and tipo = 'R'");
+        $this->view->categorias = $categoria->fetchAll("id_pai is null and tipo = '" . $this->getParam('tipo') . "'");
         $this->view->tipo = $this->getParam('tipo');
 
         $conta = new Conta();
         $this->view->contas = $conta->fetchAll();
+
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+
+            $dadosLancamento = array(
+                'titulo' => $data['titulo'],
+                'tipo' => $data['tipo'],
+                'id_categoria' => $data['id_categoria'],
+                'id_subcategoria' => $data['id_subcategoria'],
+                'vencimento' => Util::dataMysql($data['vencimento']),
+                'valor' => Util::currencyToMysql($data['valor']),
+                'id_conta' => $data['id_conta'],
+                'situacao' => $data['situacao']
+            );
+
+            if ($data['situacao'] == 1) {
+                $dadosLancamento['dataPagamento'] = date("Y-m-d");
+            }
+
+            $lancamento = new Lancamento();
+
+            try {
+                $lancamento->adicionar($dadosLancamento, $data['pagamento'], $data['parcelas']);
+                $this->_helper->flashMessenger(array('success' => 'Lançamento adicionado com sucesso!'));
+                $this->redirect("/lancamentos");
+            } catch (Zend_Db_Exception $e) {
+                $this->_helper->flashMessenger(array('error' => 'Desculpe, ocorreu um erro: ' . $e->getMessage()));
+            }
+        }
     }
 
 }
