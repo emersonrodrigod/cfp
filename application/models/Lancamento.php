@@ -111,39 +111,122 @@ class Lancamento extends Zend_Db_Table_Abstract {
         return $where;
     }
 
-    public function adicionar(array $data, $tipo, $parcelas) {
+    public function adicionar(array $data, $tipo, $parcelas, $periodicidade) {
         $data['parcelas'] = $parcelas;
         $data['numeroParcela'] = 1;
 
         if ($tipo == 0) {
-            return $this->insert($data);
-        } elseif ($tipo == 1) {
+
+
+            $idLancamento = $this->insert($data);
+
+            if ($data['situacao'] == 1) {
+
+                if ($data['tipo'] == 'D') {
+                    $data['valor'] = $data['valor'] * -1;
+
+                    $historico = "Pagamento referente a " . $data['titulo'];
+                } else {
+                    $historico = "Recebimento referente a " . $data['titulo'];
+                }
+
+
+                $dadosExtrato = array(
+                    'id_conta' => $data['id_conta'],
+                    'valor' => $data['valor'],
+                    'id_lancamento' => $idLancamento,
+                    'historico' => $historico
+                );
+
+                $this->adicionarExtrato($dadosExtrato);
+            }
+        }
+
+        if ($tipo == 1) {
 
             $data['valor'] = $data['valor'] / $parcelas;
             $data['situacao'] = 0;
 
             for ($i = 1; $i <= $parcelas; $i++) {
+
                 $data['numeroParcela'] = $i;
+
                 $vencimento = new Zend_Date(Util::dataToText($data['vencimento']));
                 if ($i > 1) {
-                    $vencimento->addMonth(1);
-                    $data['vencimento'] = $vencimento->get(Zend_Date::YEAR_8601) . '-' . $vencimento->get(Zend_Date::MONTH) . '-' . $vencimento->get(Zend_Date::DAY);
-                }
 
-                $this->insert($data);
-            }
-        } elseif ($tipo == 2) {
-            $data['situacao'] = 0;
-            $vencimento = new Zend_Date(Util::dataToText($data['vencimento']));
-            for ($i = 1; $i >= 12; $i++) {
-                if ($i > 1) {
-                    $vencimento->addMonth(1);
+                    if ($periodicidade == 0) {
+                        $vencimento->addDay(1);
+                    }
+
+                    if ($periodicidade == 1) {
+                        $vencimento->addMonth(1);
+                    }
+
+                    if ($periodicidade == 2) {
+                        $vencimento->addYear(1);
+                    }
+
                     $data['vencimento'] = $vencimento->get(Zend_Date::YEAR_8601) . '-' . $vencimento->get(Zend_Date::MONTH) . '-' . $vencimento->get(Zend_Date::DAY);
                 }
 
                 $this->insert($data);
             }
         }
+
+        if ($tipo == 2) {
+            $data['situacao'] = 0;
+            $vencimento = new Zend_Date(Util::dataToText($data['vencimento']));
+            for ($i = 1; $i <= 6; $i++) {
+                if ($i > 1) {
+
+                    if ($periodicidade == 0) {
+                        $vencimento->addDay(1);
+                    }
+
+                    if ($periodicidade == 1) {
+                        $vencimento->addMonth(1);
+                    }
+
+                    if ($periodicidade == 2) {
+                        $vencimento->addYear(1);
+                    }
+
+                    $data['vencimento'] = $vencimento->get(Zend_Date::YEAR_8601) . '-' . $vencimento->get(Zend_Date::MONTH) . '-' . $vencimento->get(Zend_Date::DAY);
+                }
+
+                $this->insert($data);
+            }
+        }
+    }
+
+    public function adicionarExtrato($dados) {
+        $extrato = new ExtratoConta();
+        $extrato->insert($dados);
+    }
+
+    public function pagar($idLancamento) {
+        $atual = $this->find($idLancamento)->current();
+
+        $atual->dataPagamento = date("Y-m-d");
+        $atual->situacao = 1;
+        $atual->save();
+
+        if ($atual->tipo == 'D') {
+            $valor = $atual->valor * -1;
+
+            $historico = "Pagamento referente a " . $atual->titulo;
+        } else {
+            $historico = "Recebimento referente a " . $atual->titulo;
+        }
+
+        $dadosExtrato = array(
+            'id_conta' => $atual->id_conta,
+            'valor' => $valor,
+            'id_lancamento' => $idLancamento,
+            'historico' => $historico
+        );
+
+        $this->adicionarExtrato($dadosExtrato);
     }
 
 }

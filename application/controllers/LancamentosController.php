@@ -123,13 +123,21 @@ class LancamentosController extends Zend_Controller_Action {
             $lancamento = new Lancamento();
 
             try {
-                $lancamento->adicionar($dadosLancamento, $data['pagamento'], $data['parcelas']);
+                $lancamento->adicionar($dadosLancamento, $data['pagamento'], $data['parcelas'], $data['periodicidade']);
                 $this->_helper->flashMessenger(array('success' => 'Lançamento adicionado com sucesso!'));
                 $this->redirect("/lancamentos");
             } catch (Zend_Db_Exception $e) {
                 $this->_helper->flashMessenger(array('error' => 'Desculpe, ocorreu um erro: ' . $e->getMessage()));
             }
         }
+    }
+
+    public function pagarAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->getHelper('viewRenderer')->setNoRender();
+        
+        $lancamento = new Lancamento();
+        $lancamento->pagar($this->getParam('id'));
     }
 
 }

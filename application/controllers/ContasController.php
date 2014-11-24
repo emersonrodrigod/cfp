@@ -11,6 +11,7 @@ class ContasController extends Zend_Controller_Action {
         if ($this->getRequest()->isPost()) {
             $conta = new Conta();
             $data = $this->getRequest()->getPost();
+            $data['saldoInicial'] = Util::currencyToMysql($data['saldoInicial']);
 
             try {
                 $conta->insert($data);
@@ -29,9 +30,11 @@ class ContasController extends Zend_Controller_Action {
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
+            $data['saldoInicial'] = Util::currencyToMysql($data['saldoInicial']);
 
             $atual->nome = $data['nome'];
             $atual->descricao = $data['descricao'];
+            $atual->saldoInicial = $data['saldoInicial'];
 
             try {
                 $atual->save();

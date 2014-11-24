@@ -49,7 +49,7 @@ class Util {
     public static function currencyToMysql($currency) {
 
         $toReturn = str_replace('.', '', $currency);
-        $toReturn = str_replace(',', '.', $currency);
+        $toReturn = str_replace(',', '.', $toReturn);
         $toReturn = str_replace('R$', '', $toReturn);
         $toReturn = trim($toReturn);
         return $toReturn;
