@@ -270,4 +270,28 @@ class Lancamento extends Zend_Db_Table_Abstract {
         $atual->delete();
     }
 
+    public function transferir($dados) {
+
+        $id = $this->insert($dados);
+
+        $dadosExtratoSaque = array(
+            'id_conta' => $dados['conta_origem'],
+            'valor' => $dados['valor'] * -1,
+            'id_lancamento' => $id,
+            'historico' => $dados['titulo'],
+            'dataTransacao' => $dados['vencimento']
+        );
+
+        $dadosExtratoDeposito = array(
+            'id_conta' => $dados['conta_destino'],
+            'valor' => $dados['valor'],
+            'id_lancamento' => $id,
+            'historico' => $dados['titulo'],
+            'dataTransacao' => $dados['vencimento']
+        );
+
+        $this->adicionarExtrato($dadosExtratoSaque);
+        $this->adicionarExtrato($dadosExtratoDeposito);
+    }
+
 }

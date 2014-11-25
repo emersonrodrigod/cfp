@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 24-Nov-2014 às 19:30
+-- Generation Time: 25-Nov-2014 às 15:00
 -- Versão do servidor: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `conta` (
 --
 
 INSERT INTO `conta` (`id`, `nome`, `descricao`, `saldoInicial`) VALUES
-(1, 'Banco Itaú', 'Conta para gerenciamento de transações referentes ao banco Itaú', -10.56),
+(1, 'Banco Itaú', 'Conta para gerenciamento de transações referentes ao banco Itaú', 0),
 (2, 'Banco Hsbc', 'Conta para gerenciamento de transações referentes ao banco HSBC', 0),
 (3, 'Carteira', 'Conta para gerenciamento do dinheiro em carteira', 0),
 (4, 'Banco Caixa', '', 0);
@@ -126,20 +126,7 @@ CREATE TABLE IF NOT EXISTS `extrato_caixa` (
   PRIMARY KEY (`id`),
   KEY `id_conta` (`id_conta`),
   KEY `id_lancamento` (`id_lancamento`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
-
---
--- Extraindo dados da tabela `extrato_caixa`
---
-
-INSERT INTO `extrato_caixa` (`id`, `dataTransacao`, `id_conta`, `valor`, `historico`, `id_lancamento`) VALUES
-(1, '2014-11-24 18:04:10', 3, 300, 'Recebimento referente a Aulas IVB', 61),
-(2, '2014-11-24 18:05:18', 2, -50, 'Pagamento referente a Supermercado Semanal', 62),
-(4, '2014-11-24 18:21:41', 1, -10, 'Pagamento referente a teste não pago', 7),
-(5, '2014-11-24 18:21:44', 2, -100, 'Pagamento referente a Teste de lançamento Parcelado', 16),
-(6, '2014-11-24 18:27:44', 1, -600, 'Pagamento referente a Aluguel mes 11', 1),
-(7, '2014-11-24 18:30:00', 1, 600, 'Estorno Recebimento referente a Aluguel mes 11', 1),
-(8, '2014-11-24 18:30:13', 1, -600, 'Pagamento referente a Aluguel mes 11', 1);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 -- --------------------------------------------------------
 
@@ -152,38 +139,24 @@ CREATE TABLE IF NOT EXISTS `lancamento` (
   `dataLancamento` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `titulo` varchar(255) NOT NULL,
   `tipo` char(1) NOT NULL,
-  `id_categoria` int(11) NOT NULL,
-  `id_subcategoria` int(11) NOT NULL,
-  `vencimento` date NOT NULL,
+  `id_categoria` int(11) DEFAULT NULL,
+  `id_subcategoria` int(11) DEFAULT NULL,
+  `vencimento` date DEFAULT NULL,
   `valor` decimal(15,2) NOT NULL,
   `situacao` int(11) NOT NULL DEFAULT '0',
   `parcelas` int(11) NOT NULL DEFAULT '1',
   `numeroParcela` int(11) NOT NULL DEFAULT '1',
-  `id_conta` int(11) NOT NULL,
+  `id_conta` int(11) DEFAULT NULL,
   `dataPagamento` timestamp NULL DEFAULT NULL,
+  `conta_origem` int(11) DEFAULT NULL,
+  `conta_destino` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_categoria` (`id_categoria`),
   KEY `id_subcategoria` (`id_subcategoria`),
-  KEY `id_conta` (`id_conta`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=63 ;
-
---
--- Extraindo dados da tabela `lancamento`
---
-
-INSERT INTO `lancamento` (`id`, `dataLancamento`, `titulo`, `tipo`, `id_categoria`, `id_subcategoria`, `vencimento`, `valor`, `situacao`, `parcelas`, `numeroParcela`, `id_conta`, `dataPagamento`) VALUES
-(1, '2014-11-20 16:54:54', 'Aluguel mes 11', 'D', 2, 9, '2014-11-25', '600.00', 1, 1, 1, 1, '2014-11-24 02:00:00'),
-(2, '2014-11-20 16:56:00', 'Supermercado semana 1 mes 11', 'D', 3, 14, '2014-11-20', '60.00', 1, 1, 1, 1, '2014-11-20 02:00:00'),
-(3, '2014-11-20 17:51:44', 'Recebimento de salario Emerson', 'R', 35, 36, '2014-11-06', '1300.00', 1, 1, 1, 1, '2014-11-14 02:00:00'),
-(4, '2014-10-01 03:00:00', 'TEste Mes anterior', 'D', 2, 6, '2014-10-01', '150.00', 1, 1, 1, 1, '2014-10-01 03:00:00'),
-(5, '2014-11-24 14:04:51', 'Banho e tosa Boris', 'D', 7, 27, '2014-11-24', '70.00', 1, 0, 1, 1, NULL),
-(6, '2014-11-24 14:07:23', 'teste com pagamento', 'D', 2, 11, '2014-11-24', '10.00', 1, 0, 1, 1, '2014-11-24 02:00:00'),
-(7, '2014-11-24 14:07:49', 'teste não pago', 'D', 2, 12, '2014-11-24', '10.00', 1, 0, 1, 1, '2014-11-24 02:00:00'),
-(16, '2014-11-24 14:24:39', 'Teste de lançamento Parcelado', 'D', 43, 45, '2014-11-25', '100.00', 1, 3, 1, 2, '2014-11-24 02:00:00'),
-(17, '2014-11-24 14:24:39', 'Teste de lançamento Parcelado', 'D', 43, 45, '2014-12-25', '100.00', 0, 3, 2, 2, NULL),
-(18, '2014-11-24 14:24:39', 'Teste de lançamento Parcelado', 'D', 43, 45, '2015-01-25', '100.00', 0, 3, 3, 2, NULL),
-(61, '2014-11-24 18:04:10', 'Aulas IVB', 'R', 35, 36, '2014-11-24', '300.00', 1, 0, 1, 3, '2014-11-24 02:00:00'),
-(62, '2014-11-24 18:05:18', 'Supermercado Semanal', 'D', 3, 14, '2014-11-24', '50.00', 1, 0, 1, 2, '2014-11-24 02:00:00');
+  KEY `id_conta` (`id_conta`),
+  KEY `conta_origem` (`conta_origem`),
+  KEY `conta_destino` (`conta_destino`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Constraints for dumped tables
@@ -199,8 +172,8 @@ ALTER TABLE `categoria`
 -- Limitadores para a tabela `extrato_caixa`
 --
 ALTER TABLE `extrato_caixa`
-  ADD CONSTRAINT `extrato_caixa_ibfk_2` FOREIGN KEY (`id_lancamento`) REFERENCES `lancamento` (`id`),
-  ADD CONSTRAINT `extrato_caixa_ibfk_1` FOREIGN KEY (`id_conta`) REFERENCES `conta` (`id`);
+  ADD CONSTRAINT `extrato_caixa_ibfk_1` FOREIGN KEY (`id_conta`) REFERENCES `conta` (`id`),
+  ADD CONSTRAINT `extrato_caixa_ibfk_2` FOREIGN KEY (`id_lancamento`) REFERENCES `lancamento` (`id`);
 
 --
 -- Limitadores para a tabela `lancamento`
@@ -208,7 +181,9 @@ ALTER TABLE `extrato_caixa`
 ALTER TABLE `lancamento`
   ADD CONSTRAINT `lancamento_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`),
   ADD CONSTRAINT `lancamento_ibfk_2` FOREIGN KEY (`id_subcategoria`) REFERENCES `categoria` (`id`),
-  ADD CONSTRAINT `lancamento_ibfk_3` FOREIGN KEY (`id_conta`) REFERENCES `conta` (`id`);
+  ADD CONSTRAINT `lancamento_ibfk_3` FOREIGN KEY (`id_conta`) REFERENCES `conta` (`id`),
+  ADD CONSTRAINT `lancamento_ibfk_4` FOREIGN KEY (`conta_origem`) REFERENCES `conta` (`id`),
+  ADD CONSTRAINT `lancamento_ibfk_5` FOREIGN KEY (`conta_destino`) REFERENCES `conta` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

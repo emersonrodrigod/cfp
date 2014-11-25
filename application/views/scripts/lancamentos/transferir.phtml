@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Transferência entre contas</h2>
+        <hr/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" action="" id="form" class="well">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="control-label" for="titulo">Título</label>
+                    <input type="text" name="titulo" class="form-control" required="true">
+                </div>
+                
+                <div class="form-group col-md-2">
+                    <label class="control-label" for="valor">Valor Total</label>
+                    <input type="text" name="valor" required="true" class="form-control price">
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label class="control-label" for="vencimento">Data</label>
+                    <input type="text" name="vencimento" required="true" class="form-control datepicker">
+                </div>
+
+                <input type="hidden" type="text" name="tipo" value="T" />
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-5">
+                    <label class="control-label" for="conta_origem">Conta de Origem</label>
+                    <select class="form-control" id="conta_origem" name="conta_origem" required="true">
+                        <option value="">Selecione....</option>
+                        <?php foreach ($this->contas as $conta) : ?>
+                            <option value="<?php echo $conta->id; ?>"><?php echo $conta->nome; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-5">
+                    <label class="control-label" for="conta_destino">Conta de Destino</label>
+                    <select class="form-control" id="conta_destino" name="conta_destino" required="true">
+                        <option value="">Selecione....</option>
+                        <?php foreach ($this->contas as $conta) : ?>
+                            <option value="<?php echo $conta->id; ?>"><?php echo $conta->nome; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12" style="margin-top: 20px !important;">
+                    <button type="submit" class="btn btn-primary">Salvar Dados</button>
+                    <a href="/lancamentos" class="btn btn-default">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    $(".datepicker").datepicker({
+        format: 'dd/mm/yyyy',
+        language: 'pt-BR',
+        viewMode: 2
+    }).on('change', function() {
+        $('.datepicker').datepicker('hide');
+        $('#form').bootstrapValidator('revalidateField', 'vencimento');
+    });
+
+    $('#form').bootstrapValidator({
+        excluded: [':hidden', ':not(:visible)'],
+        live: 'enabled'
+    }).find('.price').maskMoney({prefix: '', allowNegative: true, thousands: '.', decimal: ',', affixesStay: true});
+
+</script>

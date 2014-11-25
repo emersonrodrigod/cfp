@@ -147,13 +147,41 @@ class LancamentosController extends Zend_Controller_Action {
         $lancamento = new Lancamento();
         $lancamento->estornar($this->getParam('id'));
     }
-    
+
     public function excluirAction() {
         $this->_helper->layout()->disableLayout();
         $this->getHelper('viewRenderer')->setNoRender();
 
         $lancamento = new Lancamento();
         $lancamento->excluir($this->getParam('id'));
+    }
+
+    public function transferirAction() {
+        $conta = new Conta();
+        $this->view->contas = $conta->fetchAll();
+
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+
+            $dadosLancamento = array(
+                'vencimento' => Util::dataMysql($data['vencimento']),
+                'titulo' => $data['titulo'],
+                'tipo' => $data['tipo'],
+                'conta_origem' => $data['conta_origem'],
+                'conta_destino' => $data['conta_destino'],
+                'valor' => Util::currencyToMysql($data['valor'])
+            );
+
+            $lancamento = new Lancamento();
+
+            try {
+                $lancamento->transferir($dadosLancamento);
+                $this->_helper->flashMessenger(array('success' => 'Transferência realizada com sucesso!'));
+                $this->redirect("/lancamentos");
+            } catch (Zend_Db_Exception $e) {
+                $this->_helper->flashMessenger(array('error' => 'Desculpe, ocorreu um erro: ' . $e->getMessage()));
+            }
+        }
     }
 
 }

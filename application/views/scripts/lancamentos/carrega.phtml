@@ -9,35 +9,50 @@
         </tr>
     </thead>
     <tbody>
-
         <?php foreach ($this->lancamentos as $lancamento) : ?>
-            <tr>
-                <td>
-                    <span class="label <?php echo $lancamento->getLabel(); ?>">
-                        <i class="glyphicon glyphicon-tag"></i> <?php echo $lancamento->getCategoria()->nome; ?>
-                    </span> &nbsp;
-                    <span class="small">
-                        <?php echo $lancamento->titulo; ?>
-                        <?php echo ($lancamento->parcelas > 1 ? "<span class='label label-default'> ( $lancamento->numeroParcela de $lancamento->parcelas )</span> " : ''); ?>
-                    </span>
-                </td>
 
-                <td class="acoes"><span class="small"><?php echo date("d/m/Y", strtotime($lancamento->vencimento)); ?></span></td>
-                <td class="valores"><span class="small <?php echo $lancamento->getValorLabel(); ?>"><?php echo $lancamento->getValor(); ?></span></td>
-                <td class="acoes"><span class="label <?php echo $lancamento->getLabelSituacao(); ?>"><small><?php echo $lancamento->getSituacao(); ?></small></span></td>
-                <td class="acoes">
+            <?php if ($lancamento->tipo == 'T') : ?>
 
-                    <?php if ($lancamento->situacao == 0) : ?>
-                        <a href="javascript:void(0)" class="btn btn-default btn-xs pagar" data-value="<?php echo $lancamento->id; ?>">Pagar</a>
+                <tr>
+                    <td><span class="small"><?php echo $lancamento->titulo; ?></span></td>
+                    <td></td>
+                    <td class="valores"><span class="small fonte_azul"><?php echo $lancamento->getValor(); ?></span></td>
+                    <td class="acoes"><span class="label label-default small">Transferido em <?php echo date("d/m/Y", strtotime($lancamento->vencimento)); ?></span></td>
+                    <td class="acoes">
                         <a href="javascript:void(0)" class="btn btn-danger btn-xs excluir" data-value="<?php echo $lancamento->id; ?>">Excluir</a>
-                    <?php endif; ?>
+                    </td>
+                </tr>
 
-                    <?php if ($lancamento->situacao == 1) : ?>  
-                        <a href="javascript:void(0)" class="btn btn-default btn-xs estornar" data-value="<?php echo $lancamento->id; ?>">Estornar</a>
-                    <?php endif; ?>
-                </td>
+            <?php else : ?>
 
-            </tr>
+                <tr>
+                    <td>
+                        <span class="label <?php echo $lancamento->getLabel(); ?>">
+                            <i class="glyphicon glyphicon-tag"></i> <?php echo $lancamento->getCategoria()->nome; ?>
+                        </span> &nbsp;
+                        <span class="small">
+                            <?php echo $lancamento->titulo; ?>
+                            <?php echo ($lancamento->parcelas > 1 ? "<span class='label label-default'> ( $lancamento->numeroParcela de $lancamento->parcelas )</span> " : ''); ?>
+                        </span>
+                    </td>
+
+                    <td class="acoes"><span class="small"><?php echo date("d/m/Y", strtotime($lancamento->vencimento)); ?></span></td>
+                    <td class="valores"><span class="small <?php echo $lancamento->getValorLabel(); ?>"><?php echo $lancamento->getValor(); ?></span></td>
+                    <td class="acoes"><span class="label <?php echo $lancamento->getLabelSituacao(); ?>"><small><?php echo $lancamento->getSituacao(); ?></small></span></td>
+                    <td class="acoes">
+
+                        <?php if ($lancamento->situacao == 0) : ?>
+                            <a href="javascript:void(0)" class="btn btn-default btn-xs pagar" data-value="<?php echo $lancamento->id; ?>">Pagar</a>
+                            <a href="javascript:void(0)" class="btn btn-danger btn-xs excluir" data-value="<?php echo $lancamento->id; ?>">Excluir</a>
+                        <?php endif; ?>
+
+                        <?php if ($lancamento->situacao == 1) : ?>  
+                            <a href="javascript:void(0)" class="btn btn-default btn-xs estornar" data-value="<?php echo $lancamento->id; ?>">Estornar</a>
+                        <?php endif; ?>
+                    </td>
+
+                </tr>
+            <?php endif; ?>
 
         <?php endforeach; ?>
     </tbody>
@@ -120,7 +135,7 @@
             return false;
         }
     });
-    
+
     $('.excluir').click(function(e) {
         e.preventDefault();
         var answer = confirm("Confirma a exclusão deste lançamento?");
