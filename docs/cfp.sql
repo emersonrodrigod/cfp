@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 25-Nov-2014 às 15:00
+-- Generation Time: 27-Nov-2014 às 17:34
 -- Versão do servidor: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   `tipo` char(1) NOT NULL COMMENT 'D - Despesa; R - Receita',
   PRIMARY KEY (`id`),
   KEY `id_pai` (`id_pai`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=47 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=50 ;
 
 --
 -- Extraindo dados da tabela `categoria`
@@ -84,7 +84,10 @@ INSERT INTO `categoria` (`id`, `nome`, `id_pai`, `tipo`) VALUES
 (43, 'Vestuário', NULL, 'D'),
 (44, 'Roupas', 43, 'D'),
 (45, 'Calçados', 43, 'D'),
-(46, 'Aquisição de bens', 2, 'D');
+(46, 'Aquisição de bens', 2, 'D'),
+(47, 'Serviços Financeiros', NULL, 'D'),
+(48, 'Emprestimos', 47, 'D'),
+(49, 'Encontros / Congressos', 8, 'D');
 
 -- --------------------------------------------------------
 
@@ -105,8 +108,8 @@ CREATE TABLE IF NOT EXISTS `conta` (
 --
 
 INSERT INTO `conta` (`id`, `nome`, `descricao`, `saldoInicial`) VALUES
-(1, 'Banco Itaú', 'Conta para gerenciamento de transações referentes ao banco Itaú', 0),
-(2, 'Banco Hsbc', 'Conta para gerenciamento de transações referentes ao banco HSBC', 0),
+(1, 'Banco Itaú', 'Conta para gerenciamento de transações referentes ao banco Itaú', 5.95),
+(2, 'Banco Hsbc', 'Conta para gerenciamento de transações referentes ao banco HSBC', -73.79),
 (3, 'Carteira', 'Conta para gerenciamento do dinheiro em carteira', 0),
 (4, 'Banco Caixa', '', 0);
 
@@ -126,7 +129,15 @@ CREATE TABLE IF NOT EXISTS `extrato_caixa` (
   PRIMARY KEY (`id`),
   KEY `id_conta` (`id_conta`),
   KEY `id_lancamento` (`id_lancamento`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Extraindo dados da tabela `extrato_caixa`
+--
+
+INSERT INTO `extrato_caixa` (`id`, `dataTransacao`, `id_conta`, `valor`, `historico`, `id_lancamento`) VALUES
+(1, '2014-11-26 13:28:37', 1, -145, 'Pagamento referente a Cheque Reencontro com Deus Fabiana', 9),
+(2, '2014-11-26 13:39:57', 1, 298.66, 'Recebimento referente a Recebimento via cheque - aulas IVB', 10);
 
 -- --------------------------------------------------------
 
@@ -156,7 +167,47 @@ CREATE TABLE IF NOT EXISTS `lancamento` (
   KEY `id_conta` (`id_conta`),
   KEY `conta_origem` (`conta_origem`),
   KEY `conta_destino` (`conta_destino`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+
+--
+-- Extraindo dados da tabela `lancamento`
+--
+
+INSERT INTO `lancamento` (`id`, `dataLancamento`, `titulo`, `tipo`, `id_categoria`, `id_subcategoria`, `vencimento`, `valor`, `situacao`, `parcelas`, `numeroParcela`, `id_conta`, `dataPagamento`, `conta_origem`, `conta_destino`) VALUES
+(1, '2014-11-26 13:21:05', 'Adiantamento Emerson', 'R', 35, 37, '2014-11-20', '1200.00', 0, 0, 1, 2, NULL, NULL, NULL),
+(2, '2014-11-26 13:21:40', 'Aluguel', 'D', 2, 9, '2014-11-25', '630.00', 0, 0, 1, 3, NULL, NULL, NULL),
+(3, '2014-11-26 13:21:40', 'Aluguel', 'D', 2, 9, '2014-12-25', '630.00', 0, 0, 1, 3, NULL, NULL, NULL),
+(4, '2014-11-26 13:21:40', 'Aluguel', 'D', 2, 9, '2015-01-25', '630.00', 0, 0, 1, 3, NULL, NULL, NULL),
+(5, '2014-11-26 13:21:40', 'Aluguel', 'D', 2, 9, '2015-02-25', '630.00', 0, 0, 1, 3, NULL, NULL, NULL),
+(6, '2014-11-26 13:21:40', 'Aluguel', 'D', 2, 9, '2015-03-25', '630.00', 0, 0, 1, 3, NULL, NULL, NULL),
+(7, '2014-11-26 13:21:40', 'Aluguel', 'D', 2, 9, '2015-04-25', '630.00', 0, 0, 1, 3, NULL, NULL, NULL),
+(8, '2014-11-26 13:22:56', 'Emprestimo ITAU Fabiana', 'D', 47, 48, '2014-11-30', '250.00', 0, 0, 1, 2, NULL, NULL, NULL),
+(9, '2014-11-26 13:26:43', 'Cheque Reencontro com Deus Fabiana', 'D', 8, 49, '2014-11-26', '145.00', 1, 0, 1, 1, '2014-11-26 02:00:00', NULL, NULL),
+(10, '2014-11-26 13:39:57', 'Recebimento via cheque - aulas IVB', 'R', 35, 36, '2014-11-26', '298.66', 1, 0, 1, 1, '2014-11-26 02:00:00', NULL, NULL),
+(11, '2014-11-26 13:42:06', 'Emprestimo Emerson', 'D', 47, 48, '2014-12-08', '212.59', 0, 0, 1, 1, NULL, NULL, NULL),
+(12, '2014-11-26 13:42:06', 'Emprestimo Emerson', 'D', 47, 48, '2015-01-08', '212.59', 0, 0, 1, 1, NULL, NULL, NULL),
+(13, '2014-11-26 13:42:06', 'Emprestimo Emerson', 'D', 47, 48, '2015-02-08', '212.59', 0, 0, 1, 1, NULL, NULL, NULL),
+(14, '2014-11-26 13:42:06', 'Emprestimo Emerson', 'D', 47, 48, '2015-03-08', '212.59', 0, 0, 1, 1, NULL, NULL, NULL),
+(15, '2014-11-26 13:42:06', 'Emprestimo Emerson', 'D', 47, 48, '2015-04-08', '212.59', 0, 0, 1, 1, NULL, NULL, NULL),
+(16, '2014-11-26 13:42:06', 'Emprestimo Emerson', 'D', 47, 48, '2015-05-08', '212.59', 0, 0, 1, 1, NULL, NULL, NULL),
+(18, '2014-11-26 13:44:09', 'Aluguel', 'D', 2, 9, '2015-05-25', '630.00', 0, 0, 1, 3, NULL, NULL, NULL),
+(19, '2014-11-26 13:44:09', 'Aluguel', 'D', 2, 9, '2015-06-25', '630.00', 0, 0, 1, 3, NULL, NULL, NULL),
+(20, '2014-11-26 13:44:09', 'Aluguel', 'D', 2, 9, '2015-07-25', '630.00', 0, 0, 1, 3, NULL, NULL, NULL),
+(21, '2014-11-26 13:44:09', 'Aluguel', 'D', 2, 9, '2015-08-25', '630.00', 0, 0, 1, 3, NULL, NULL, NULL),
+(22, '2014-11-26 13:44:09', 'Aluguel', 'D', 2, 9, '2015-09-25', '630.00', 0, 0, 1, 3, NULL, NULL, NULL),
+(23, '2014-11-26 13:44:09', 'Aluguel', 'D', 2, 9, '2015-10-25', '630.00', 0, 0, 1, 3, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `phinxlog`
+--
+
+CREATE TABLE IF NOT EXISTS `phinxlog` (
+  `version` bigint(14) NOT NULL,
+  `start_time` timestamp NOT NULL,
+  `end_time` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Constraints for dumped tables
