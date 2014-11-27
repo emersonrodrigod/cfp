@@ -33,13 +33,7 @@
         <script type="text/javascript" src="/js/datepicker/js/locales/bootstrap-datepicker.pt-BR.js"></script>
 
         <script>
-            $('.tree').treegrid(
-                    {
-                        initialState: 'collapsed'
-                    }
-            );
-
-            $(function() {
+            $(function () {
                 var oTable = $('.dataTable').dataTable({
                     "sPaginationType": "full_numbers",
                     "sDom": 'f<"toolbar">lrtip',
@@ -65,17 +59,23 @@
                 $('.price').maskMoney({prefix: '', allowNegative: true, thousands: '.', decimal: ',', affixesStay: false});
 
                 /*$(".datepicker").datepicker({
-                    format: 'dd/mm/yyyy',
-                    language: 'pt-BR',
-                    viewMode: 2
-                }).on('change', function() {
-                    $('.datepicker').datepicker('hide');
-                });*/
+                 format: 'dd/mm/yyyy',
+                 language: 'pt-BR',
+                 viewMode: 2
+                 }).on('change', function() {
+                 $('.datepicker').datepicker('hide');
+                 });*/
 
                 $('.form-validate').bootstrapValidator({
                     excluded: [':disabled', ':hidden', ':not(:visible)'],
                     live: 'enabled'
                 }).find('.price').maskMoney({prefix: '', allowNegative: true, thousands: '.', decimal: ',', affixesStay: false});
+
+                $('.tree').treegrid(
+                        {
+                            initialState: 'collapsed'
+                        }
+                );
             });
         </script>
 
@@ -161,7 +161,7 @@
 
             <?php echo $this->flashMessenger(); ?>
             <?php echo $this->layout()->content; ?>
-            
+
             <footer>
                 <hr/>
                 <span class="small">Controle Financeiro Pessoal - Desenvolvedor Emerson Dário</span>
@@ -184,7 +184,7 @@
                 weekNumbers: false,
                 editable: false,
                 events: '/tarefas/eventos',
-                eventRender: function(event, element) {
+                eventRender: function (event, element) {
                     element.tooltip({
                         title: 'Solicitante: ' + event.solicitante,
                         placement: 'right'
