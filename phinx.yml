@@ -6,10 +6,10 @@ environments:
     default_database: development
     production:
         adapter: mysql
-        host: localhost
+        host: tunnel.pagodabox.com
         name: cfp
-        user: root
-        pass: 'root'
+        user: alda
+        pass: 'MjXZb4qh'
         port: 3306
         charset: utf8
 

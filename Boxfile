@@ -1,0 +1,15 @@
+global:
+  env:
+    - APPLICATION_ENV: production
+web1:
+  name: financeiropessoal
+  document_root: /public
+  php_version: 5.4.14
+  php_extensions:
+    - pdo_mysql
+    - mcrypt
+    - eaccelerator
+    - memcached
+    - curl
+  before_deploy:
+    - "php vendor/robmorgan/phinx/bin/pninx migrate -e production"
